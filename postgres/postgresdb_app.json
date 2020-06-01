@@ -1,0 +1,191 @@
+{
+  "appConfig": {},
+  "description": "To reach the database for administration, you will need two consoles. If the first, run\n`export PGMASTER=$(kubectl get pods -o jsonpath={.items..metadata.name} -n <namespace> -l application=spilo,cluster-name=<team_id>-<pod_name_suffix>,spilo-role=master)`\n`kubectl port-forward $PGMASTER 6432:5432 -n <namespace>`\nIn the second console, run\n`export PGPASSWORD=$(kubectl get secret -n <namespace> postgres.<team_id>-<pod_name_suffix>.credentials.postgresql.acid.zalan.do -o 'jsonpath={.data.password}' | base64 -d)`\n`psql -U postgres -p 6432 -h localhost`\nFrom the docs:\n> The operator automatically generates a password for each manifest role and places it in the secret named `{username}.{team}-{clustername}.credentials.postgresql.acid.zalan.do` in the same namespace as the cluster. This way, the application running in the K8s cluster and connecting to Postgres can obtain the password right from the secret, without ever sharing it outside of the cluster.\nTo reach your database from within your namespace, use:\n`${parameters.team_id}-${parameters.pod_name_suffix}.svc.cluster.local`\nTo reach your database within another namespace, use:\n`${parameters.team_id}-${parameters.pod_name_suffix}.${parameters.namespace}.svc.cluster.local`",
+  "expectedArtifacts": [],
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": false,
+  "parameterConfig": [
+    {
+      "default": "",
+      "description": "The full pod name will be team_id-pod_name_suffix.",
+      "hasOptions": false,
+      "label": "Pod Name suffix",
+      "name": "pod_name_suffix",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "",
+      "description": "A namespace that already exists.",
+      "hasOptions": false,
+      "label": "Namespace",
+      "name": "namespace",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "",
+      "description": "Probably your team name.",
+      "hasOptions": false,
+      "label": "Team ID",
+      "name": "team_id",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "1",
+      "description": "Size of EBS store in Gibigytes.",
+      "hasOptions": false,
+      "label": "Volime Size (Gi)",
+      "name": "volume_size",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "3",
+      "description": "Value must be at least 1.",
+      "hasOptions": false,
+      "label": "Number of Instances",
+      "name": "instances",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "11",
+      "description": "",
+      "hasOptions": true,
+      "label": "Postgres Version",
+      "name": "postgres_version",
+      "options": [
+        {
+          "value": "11"
+        },
+        {
+          "value": "12"
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "100",
+      "description": "An integer no smaller than 1. 1 whole CPU equals 1000 millicpus.",
+      "hasOptions": false,
+      "label": "CPU to Request",
+      "name": "cpus_request",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "100",
+      "description": "An integer in Mibibytes.",
+      "hasOptions": false,
+      "label": "Memory to Request",
+      "name": "memory_request",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "1000",
+      "description": "An integer no smaller than 1. 1 whole CPU equals 1000 millicpus.",
+      "hasOptions": false,
+      "label": "CPU Upper Limit",
+      "name": "cpus_limit",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "500",
+      "description": "An integer in Mibibytes.",
+      "hasOptions": false,
+      "label": "Memory Upper Limit",
+      "name": "memory_limit",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    }
+  ],
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "account": "spinnaker-service-account",
+      "cloudProvider": "kubernetes",
+      "expectedArtifacts": [],
+      "manifestArtifact": {
+        "artifactAccount": "vegaCoreInfrastructureGitHub",
+        "id": "19088c82-1d3f-4c7a-ace7-c8fa3e1771b4",
+        "name": "spinnaker_utils/postgres/database_template.yaml",
+        "reference": "https://git.viasat.com/api/v3/repos/vega/core-infrastructure/contents/spinnaker_utils/postgres/database_template.yaml",
+        "type": "github/file",
+        "version": "master"
+      },
+      "moniker": {
+        "app": "postgresdb"
+      },
+      "name": "Deploy (Manifest)",
+      "namespaceOverride": "",
+      "refId": "1",
+      "requiredArtifactIds": [],
+      "requiredArtifacts": [],
+      "requisiteStageRefIds": [],
+      "skipExpressionEvaluation": false,
+      "source": "artifact",
+      "stageTimeoutMs": 300000,
+      "trafficManagement": {
+        "enabled": false,
+        "options": {
+          "enableTraffic": false,
+          "services": []
+        }
+      },
+      "type": "deployManifest"
+    }
+  ],
+  "triggers": [],
+  "updateTs": "1590691308171"
+}

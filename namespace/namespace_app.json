@@ -1,0 +1,58 @@
+{
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "parameterConfig": [
+    {
+      "default": "default",
+      "description": "",
+      "hasOptions": false,
+      "label": "",
+      "name": "namespace",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": true,
+      "required": true
+    }
+  ],
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "account": "spinnaker-service-account",
+      "cloudProvider": "kubernetes",
+      "manifests": [
+        {
+          "apiVersion": "v1",
+          "kind": "Namespace",
+          "metadata": {
+            "name": "${parameters.namespace}"
+          }
+        }
+      ],
+      "moniker": {
+        "app": "namespacecreation"
+      },
+      "name": "Deploy (Manifest)",
+      "namespaceOverride": "",
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "restrictExecutionDuringTimeWindow": false,
+      "skipExpressionEvaluation": false,
+      "source": "text",
+      "stageTimeoutMs": 300000,
+      "trafficManagement": {
+        "enabled": false,
+        "options": {
+          "enableTraffic": false,
+          "services": []
+        }
+      },
+      "type": "deployManifest"
+    }
+  ],
+  "triggers": [],
+  "updateTs": "1590684277705"
+}

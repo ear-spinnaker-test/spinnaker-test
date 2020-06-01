@@ -1,0 +1,68 @@
+{
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": false,
+  "parameterConfig": [
+    {
+      "default": "",
+      "description": "App boundary",
+      "hasOptions": false,
+      "label": "",
+      "name": "namespace",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    },
+    {
+      "default": "",
+      "description": "API application name",
+      "hasOptions": false,
+      "label": "",
+      "name": "app_name",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": false,
+      "required": true
+    }
+  ],
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "account": "spinnaker-service-account@viasat-orbit-dev.iam.gserviceaccount.com",
+      "cloudProvider": "kubernetes",
+      "manifestArtifact": {
+        "artifactAccount": "vegaCoreInfrastructureGitHub",
+        "id": "32b75720-4fbc-4ffc-865b-791dca578c6b",
+        "name": "spinnaker_utils/istio/istio_for_apps.yaml",
+        "reference": "https://git.viasat.com/api/v3/repos/vega/core-infrastructure/contents/spinnaker_utils/istio/istio_for_apps.yaml",
+        "type": "github/file",
+        "version": "ear_utils"
+      },
+      "moniker": {
+        "app": "istioforapps"
+      },
+      "name": "configure istio",
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "skipExpressionEvaluation": false,
+      "source": "artifact",
+      "trafficManagement": {
+        "enabled": false,
+        "options": {
+          "enableTraffic": false,
+          "services": []
+        }
+      },
+      "type": "deployManifest"
+    }
+  ],
+  "triggers": [],
+  "updateTs": "1591033170520"
+}

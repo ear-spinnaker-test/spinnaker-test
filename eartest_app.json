@@ -1,0 +1,72 @@
+{
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "parameterConfig": [
+    {
+      "default": "",
+      "description": "",
+      "hasOptions": false,
+      "label": "",
+      "name": "namespace",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": true,
+      "required": true
+    },
+    {
+      "default": "",
+      "description": "",
+      "hasOptions": false,
+      "label": "",
+      "name": "team_id",
+      "options": [
+        {
+          "value": ""
+        }
+      ],
+      "pinned": true,
+      "required": true
+    }
+  ],
+  "spelEvaluator": "v4",
+  "stages": [
+    {
+      "application": "postgresdb",
+      "failPipeline": true,
+      "name": "deploy postgres",
+      "pipeline": "8c71579c-a5bc-4e84-9c8b-bfd6bd5ed7d4",
+      "pipelineParameters": {
+        "namespace": "${parameters.namespace}",
+        "pod_name_suffix": "postgres",
+        "team_id": "${parameters.team_id}"
+      },
+      "refId": "1",
+      "requisiteStageRefIds": [
+        "2"
+      ],
+      "stageTimeoutMs": 600000,
+      "type": "pipeline",
+      "waitForCompletion": true
+    },
+    {
+      "application": "namespacecreation",
+      "failPipeline": true,
+      "name": "create namespace",
+      "pipeline": "c02da36f-e766-447a-9a97-3cabe6132ba7",
+      "pipelineParameters": {
+        "namespace": "${parameters.namespace}"
+      },
+      "refId": "2",
+      "requisiteStageRefIds": [],
+      "stageTimeoutMs": 300000,
+      "type": "pipeline",
+      "waitForCompletion": true
+    }
+  ],
+  "triggers": [],
+  "updateTs": "1590682891951"
+}

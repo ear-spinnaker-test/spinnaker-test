@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: "${parameters.app_name}-internal-gateway" 
+  namespace: "${parameters.namespace}"
+spec:
+  selector:
+    istio: "${parameters.app_name}-internal-ingressgateway" # use a custom 'gateway controller'
+  servers:
+  - port:
+      number: 443
+      name: https
+      protocol: HTTPS
+    hosts:
+    - "*"

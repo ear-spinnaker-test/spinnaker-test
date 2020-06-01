@@ -1,0 +1,24 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: '${parameters.team_id}-${parameters.pod_name_suffix}'
+  namespace: '${parameters.namespace}'
+  labels:
+    team: '${parameters.team_id}'
+spec:
+  teamId: '${parameters.team_id}'
+  volume:
+    storageClass: ebs-sc
+    size: '${parameters.volume_size}Gi'
+  numberOfInstances: '${#toInt(parameters.instances)}'
+  enableMasterLoadBalancer: false
+  enableReplicaLoadBalancer: false
+  postgresql:
+    version: "${parameters.postgres_version}"
+  resources:
+    requests:
+      cpu: '${parameters.cpus_request}m'
+      memory: '${parameters.memory_request}Mi'
+    limits:
+      cpu: '${parameters.cpus_limit}m'
+      memory: '${parameters.memory_limit}Mi'

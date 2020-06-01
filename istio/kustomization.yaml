@@ -1,0 +1,4 @@
+resources:
+- internal_istio_ingress_gateway.yaml
+- internal_gateway.yaml
+- virtual_service.yaml
