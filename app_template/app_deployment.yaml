@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: '${parameters.app_name}'
+  name: '${parameters.app_name}'
+  namespace: '${parameters.namespace}'
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: '${parameters.app_name}'
+  template:
+    metadata:
+      labels:
+        app: '${parameters.app_name}'
+    spec:
+      containers:
+        - image: 'artifactory.viasat.com:8253/vega-docker-dev'
+          name: venue
+          ports:
+            - containerPort: 80
