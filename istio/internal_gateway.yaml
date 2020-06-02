@@ -8,7 +8,7 @@ spec:
     istio: "${parameters.app_name}-internal-ingressgateway" # use a custom 'gateway controller'
   servers:
   - port:
-      number: 443
+      number: 80
       name: https
       protocol: HTTPS
     hosts:
